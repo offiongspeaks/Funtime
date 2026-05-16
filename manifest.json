@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Pinterest Sponsored Pin Blocker",
+  "description": "Removes sponsored/promoted Pinterest pins so only organic pins remain visible.",
+  "version": "1.0.0",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.pinterest.com/*",
+        "https://*.pinterest.com/*"
+      ],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_start"
+    }
+  ]
+}
