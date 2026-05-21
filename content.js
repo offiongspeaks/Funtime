@@ -79,15 +79,13 @@
     return null;
   };
 
-  const removePinContainer = (pinContainer) => {
+  const hidePinContainer = (pinContainer) => {
     if (!pinContainer || pinContainer.hasAttribute(HIDDEN_ATTRIBUTE)) {
       return;
     }
 
-    const removableAncestor = pinContainer.closest('[data-grid-item], [role="listitem"], article') || pinContainer;
-    removableAncestor.setAttribute(HIDDEN_ATTRIBUTE, 'true');
-    removableAncestor.setAttribute('aria-hidden', 'true');
-    removableAncestor.remove();
+    pinContainer.setAttribute(HIDDEN_ATTRIBUTE, 'true');
+    pinContainer.setAttribute('aria-hidden', 'true');
   };
 
   const scanTextNodes = (root) => {
@@ -108,7 +106,7 @@
     let node = walker.nextNode();
     while (node) {
       const sponsorLabelElement = getElementFromTextNode(node);
-      removePinContainer(getPinContainer(sponsorLabelElement));
+      hidePinContainer(getPinContainer(sponsorLabelElement));
       node = walker.nextNode();
     }
   };
@@ -133,7 +131,7 @@
       ].filter(Boolean).join(' ');
 
       if (matchesSponsorText(signalText)) {
-        removePinContainer(getPinContainer(element));
+        hidePinContainer(getPinContainer(element));
       }
     });
   };
@@ -168,7 +166,7 @@
         if (mutation.type === 'childList') {
           mutation.addedNodes.forEach((node) => {
             if (node.nodeType === Node.TEXT_NODE && matchesSponsorText(node.nodeValue)) {
-              removePinContainer(getPinContainer(getElementFromTextNode(node)));
+              hidePinContainer(getPinContainer(getElementFromTextNode(node)));
               return;
             }
 
@@ -179,13 +177,13 @@
         }
 
         if (mutation.type === 'characterData' && matchesSponsorText(mutation.target.nodeValue)) {
-          removePinContainer(getPinContainer(getElementFromTextNode(mutation.target)));
+          hidePinContainer(getPinContainer(getElementFromTextNode(mutation.target)));
         }
 
         if (mutation.type === 'attributes' && isElement(mutation.target)) {
           const attributeValue = mutation.target.getAttribute(mutation.attributeName);
           if (matchesSponsorText(attributeValue)) {
-            removePinContainer(getPinContainer(mutation.target));
+            hidePinContainer(getPinContainer(mutation.target));
           }
         }
       }

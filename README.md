@@ -93,11 +93,11 @@ Try these beginner checks:
 
 - Runs only on `pinterest.com` pages.
 - Scans loaded pins for sponsorship labels such as `Sponsored`, `Promoted`, `Paid partnership`, and `Advertisement`.
-- Removes the full pin container from the page when a sponsored signal is found, so no empty slot remains.
+- Hides the full pin container when a sponsored signal is found.
 - Watches Pinterest's dynamic feed with a `MutationObserver`, so newly loaded ads are removed while scrolling.
 
 ## Files
 
 - `manifest.json` registers the Chrome Extension Manifest V3 content script for Pinterest.
-- `content.js` detects sponsored labels and removes their pin containers.
+- `content.js` detects sponsored labels and hides their pin containers.
 - `styles.css` applies the final `display: none` rule to blocked pins.
